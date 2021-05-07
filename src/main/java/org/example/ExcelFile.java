@@ -225,7 +225,7 @@ public class ExcelFile{
 
                         //shifting rows
 //                        if(deleteToRow-1!=sheet.getLastRowNum()) {
-//                            sheet.shiftRows(deleteToRow, sheet.getLastRowNum(), -((deleteToRow - deleteFromRow) + 1));
+                        sheet.shiftRows(deleteToRow, sheet.getLastRowNum(), -((deleteToRow - deleteFromRow) + 1));
 //                        }
 //                        sheet.shiftRows(deleteToRow,sheet.getLastRowNum(),-((deleteToRow-deleteFromRow)+1));
                         //TODO fix the numbers after shifting is done
