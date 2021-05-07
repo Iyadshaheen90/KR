@@ -9,8 +9,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class KrPreviewWindowController {
 
-    private ObservableList<ExcelRow> ol = FXCollections.observableArrayList();
-
     @FXML
     private TableView<ExcelRow> table;
 

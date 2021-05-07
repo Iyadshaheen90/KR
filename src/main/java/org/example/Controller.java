@@ -604,7 +604,7 @@ public class Controller extends KrPreviewWindowController{
             // this forces the user to close the preview window before getting back to the main
             //program and continuing to use it.
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Data in Tableview");
+            stage.setTitle(sheetChoiceBox.getValue() + " Data in Tableview");
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
