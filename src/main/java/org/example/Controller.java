@@ -1,14 +1,22 @@
 package org.example;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class Controller {
+public class Controller extends KrPreviewWindowController{
     private File file;
     private boolean isInt = true;
     private boolean isPositive = true;
@@ -191,6 +199,7 @@ public class Controller {
         if(yesUpdateButton.isSelected() && !yesUpdateButton.isDisable()){
             updatePaymentMethodLabel.setVisible(true);
             updateMethodChoiceBox.setVisible(true);
+
             updateMethodChoiceBox.setTooltip(new Tooltip("Select a payment method"));
             noUpdateButton.setDisable(false);
             noUpdateButton.setSelected(false);
@@ -566,6 +575,44 @@ public class Controller {
             return true;
         }catch (NumberFormatException e){
             return false;
+        }
+    }
+
+    @FXML
+    void previewClicked(ActionEvent event) throws IOException {
+        ObservableList<ExcelRow> ol;
+        AlertBox alertBox = new AlertBox();
+        alertBox.ChangeAlertType();
+        if(!filePath.getText().isEmpty()) {
+            ExcelFile ef = new ExcelFile();
+            ef.initOl(filePath.getText(), sheetChoiceBox.getValue());
+            ol = ef.getOl();
+            //commented code is to test whether the data from the excel file is being saved to a observable list "ol"
+            //or not
+            for (ExcelRow er: ol){
+                System.out.println(er.getRowNumber()+" "+er.getSlotNumber()+" "
+                +er.getName()+" "+er.getPaid()+" "+er.getPaymentMethod());
+            }
+
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("krPreviewWindow.fxml"));
+            Parent root = fxmlLoader.load();
+            KrPreviewWindowController controller = fxmlLoader.getController();
+            controller.init(ol);
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            // this forces the user to close the preview window before getting back to the main
+            //program and continuing to use it.
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Data in Tableview");
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        }
+        //else if no file is been selected
+        else{
+            alertBox.setMessage("No selected file to view!");
+            alertBox.displayPopup();
         }
     }
 

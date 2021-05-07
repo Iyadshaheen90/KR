@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.ProgressBar;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.*;
@@ -27,6 +29,7 @@ public class ExcelFile{
     private String sheetName;
     private boolean paid;
     private String paymentMethod;
+    private ObservableList<ExcelRow> ol = FXCollections.observableArrayList();
 
     //Constructor of class will be used as a empty constructor for side purposes
     public ExcelFile(){
@@ -59,6 +62,37 @@ public class ExcelFile{
         this.deleteToRow = deleteToRow;
         this.pBar = pBar;
         this.sheetName = sheetName;
+    }
+
+    public ObservableList<ExcelRow> getOl() {
+        return ol;
+    }
+
+    public void initOl(String filePath, String sheet){
+        ol.clear();
+        try {
+            FileInputStream inputStream1 = new FileInputStream((filePath));
+            Workbook workbook = WorkbookFactory.create(inputStream1);
+            Sheet currentSheet = workbook.getSheetAt(workbook.getSheetIndex(sheet));
+            for (int i = 0; i <= currentSheet.getLastRowNum(); i++){
+                if(currentSheet.getRow(i)!=null) {
+                    ol.add(new ExcelRow((int)currentSheet.getRow(i).getCell(0).getNumericCellValue(),
+                            String.valueOf((int)currentSheet.getRow(i).getCell(0).getNumericCellValue()),
+                            currentSheet.getRow(i).getCell(1).getStringCellValue(),
+                            currentSheet.getRow(i).getCell(2).getStringCellValue(),
+                            currentSheet.getRow(i).getCell(3).getStringCellValue()));
+                }
+                else{
+                    ol.add(new ExcelRow(i+1,
+                            "",
+                            "",
+                            "",
+                            ""));
+                }
+            }
+        } catch (IOException | EncryptedDocumentException ex) {
+            ex.printStackTrace();
+        }
     }
 
     protected ArrayList<String> getSheets(String filePath){
@@ -188,7 +222,6 @@ public class ExcelFile{
                             sheet.removeRow(sheet.getRow(i));
                             publish((double) (100 * i) / (deleteToRow - deleteFromRow + 1));
                         }
-
 
                         //shifting rows
 //                        if(deleteToRow-1!=sheet.getLastRowNum()) {

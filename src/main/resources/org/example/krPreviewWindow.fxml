@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.KrPreviewWindowController">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="580.0">
+         <children>
+            <TableView fx:id="table" prefHeight="400.0" prefWidth="600.0">
+              <columns>
+                  <TableColumn fx:id="colRow" editable="false" prefWidth="77.0" text="ROW#" style="-fx-alignment: CENTER;"/>
+                  <TableColumn fx:id="colSlot" editable="false" prefWidth="77.0" text="SLOT #" style="-fx-alignment: CENTER;"/>
+                  <TableColumn fx:id="colName" editable="false" prefWidth="177.0" text="NAME" style="-fx-alignment: CENTER;"/>
+                  <TableColumn fx:id="colPaid" editable="false" prefWidth="83.0" text="PAID" style="-fx-alignment: CENTER;"/>
+                  <TableColumn fx:id="colPaymentMethod" editable="false" prefWidth="185.0" text="PAYMENT METHOD" style="-fx-alignment: CENTER;"/>
+              </columns>
+            </TableView>
+         </children></AnchorPane>
+  </content>
+</ScrollPane>
