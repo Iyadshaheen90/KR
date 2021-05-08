@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -30,12 +32,15 @@ public class Controller extends KrPreviewWindowController{
     @FXML
     private Button filePathBrowse;
 
+    //clear is path field clear button
     @FXML
     private Button clear;
 
+    //clear2 is write clear button
     @FXML
     private Button clear2;
 
+    //clear3 is delete clear button
     @FXML
     private Button clear3;
 
@@ -87,6 +92,7 @@ public class Controller extends KrPreviewWindowController{
     @FXML
     private Button update;
 
+    //clear4 is update clear button
     @FXML
     private Button clear4;
 
@@ -102,8 +108,46 @@ public class Controller extends KrPreviewWindowController{
     @FXML
     private ChoiceBox<String> updateMethodChoiceBox;
 
+    //adding key-event "Enter" to buttons
     @FXML
-    void browseClicked(ActionEvent event) {
+    void enterClicked(KeyEvent event) throws Exception {
+        if(event.getCode()==KeyCode.ENTER){
+            if(event.getSource()==Write){
+                writeClicked();
+            }
+            else if(event.getSource()==delete){
+                deleteClicked();
+            }
+            else if(event.getSource()==update){
+                updateClicked();
+            }
+            else if(event.getSource()==filePathBrowse){
+                browseClicked();
+            }
+            //path field clear button
+            else if(event.getSource()==clear){
+                clearClicked();
+            }
+            //write clear button
+            else if(event.getSource()==clear2){
+                clear2Clicked();
+            }
+            //delete clear button
+            else if(event.getSource()==clear3){
+                clear3Clicked();
+            }
+            //update clear button
+            else if(event.getSource()==clear4){
+                clear4Clicked();
+            }
+        }
+        else {
+            event.consume();
+        }
+    }
+
+    @FXML
+    void browseClicked() {
         System.out.println("Browse clicked!");
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("choose a file");
@@ -165,7 +209,7 @@ public class Controller extends KrPreviewWindowController{
     }
 
     @FXML
-    void clearClicked(ActionEvent event) {
+    void clearClicked() {
         clearItemsInChoiceBox();
         clearItemsInMethodChoiceBox(updateMethodChoiceBox);
         clearItemsInMethodChoiceBox(writeMethodChoiceBox);
@@ -177,25 +221,25 @@ public class Controller extends KrPreviewWindowController{
     }
 
     @FXML
-    void clear2Clicked(ActionEvent event) {
+    void clear2Clicked() {
         nameField.setText("");
         slotsField.setText("");
     }
 
     @FXML
-    void clear3Clicked(ActionEvent event) {
+    void clear3Clicked() {
         deleteFromField.setText("");
         deleteToField.setText("");
     }
 
     @FXML
-    void clear4Clicked(ActionEvent event) {
+    void clear4Clicked() {
         updateFromField.setText("");
         updateToField.setText("");
     }
 
     @FXML
-    void updateRadioButtonClicked(ActionEvent event) {
+    void updateRadioButtonClicked() {
         if(yesUpdateButton.isSelected() && !yesUpdateButton.isDisable()){
             updatePaymentMethodLabel.setVisible(true);
             updateMethodChoiceBox.setVisible(true);
@@ -215,7 +259,7 @@ public class Controller extends KrPreviewWindowController{
     }
 
     @FXML
-    void writeRadioButtonClicked(ActionEvent event) {
+    void writeRadioButtonClicked() {
         if(yesWriteButton.isSelected() && !yesWriteButton.isDisable()){
             writePaymentMethodLabel.setVisible(true);
             writeMethodChoiceBox.setVisible(true);
@@ -234,7 +278,7 @@ public class Controller extends KrPreviewWindowController{
     }
 
     @FXML
-    void updateClicked(ActionEvent event) {
+    void updateClicked() {
         AlertBox popup = new AlertBox();
         boolean paid = false;
         String paymentMethod = "N/A";
@@ -366,7 +410,7 @@ public class Controller extends KrPreviewWindowController{
 
 
     @FXML
-    void deleteClicked(ActionEvent event) {
+    void deleteClicked() {
         /*
         if delete is clicked we will have to check and verify that the deletefromfield
         value is less than or equal to deleteToField, and deleteToField is greater
@@ -497,7 +541,7 @@ public class Controller extends KrPreviewWindowController{
     }
 
     @FXML
-    void writeClicked(ActionEvent event) throws Exception {
+    void writeClicked() throws Exception {
         this.isInt = isInt(slotsField);
         this.isPositive = isPositive(slotsField);
         boolean paid = false;
@@ -579,7 +623,7 @@ public class Controller extends KrPreviewWindowController{
     }
 
     @FXML
-    void previewClicked(ActionEvent event) throws IOException {
+    void previewClicked() throws IOException {
         ObservableList<ExcelRow> ol;
         AlertBox alertBox = new AlertBox();
         alertBox.ChangeAlertType();
@@ -617,7 +661,7 @@ public class Controller extends KrPreviewWindowController{
     }
 
     @FXML
-    void closeApplication(ActionEvent event) {
+    void closeApplication() {
         System.exit(0);
     }
 }

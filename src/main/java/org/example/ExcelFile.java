@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -76,7 +77,7 @@ public class ExcelFile{
             Sheet currentSheet = workbook.getSheetAt(workbook.getSheetIndex(sheet));
             for (int i = 0; i <= currentSheet.getLastRowNum(); i++){
                 if(currentSheet.getRow(i)!=null) {
-                    ol.add(new ExcelRow((int)currentSheet.getRow(i).getCell(0).getNumericCellValue(),
+                    ol.add(new ExcelRow(i+1,
                             String.valueOf((int)currentSheet.getRow(i).getCell(0).getNumericCellValue()),
                             currentSheet.getRow(i).getCell(1).getStringCellValue(),
                             currentSheet.getRow(i).getCell(2).getStringCellValue(),
@@ -90,6 +91,9 @@ public class ExcelFile{
                             ""));
                 }
             }
+
+            int occurrences = Collections.frequency(ol, ol.contains("Dex '1'"));
+            System.out.println("this contains " + occurrences + " slots of this buyer");
         } catch (IOException | EncryptedDocumentException ex) {
             ex.printStackTrace();
         }
@@ -225,7 +229,7 @@ public class ExcelFile{
 
                         //shifting rows
 //                        if(deleteToRow-1!=sheet.getLastRowNum()) {
-                        sheet.shiftRows(deleteToRow, sheet.getLastRowNum(), -((deleteToRow - deleteFromRow) + 1));
+//                        sheet.shiftRows(deleteToRow, sheet.getLastRowNum(), -((deleteToRow - deleteFromRow) + 1));
 //                        }
 //                        sheet.shiftRows(deleteToRow,sheet.getLastRowNum(),-((deleteToRow-deleteFromRow)+1));
                         //TODO fix the numbers after shifting is done
