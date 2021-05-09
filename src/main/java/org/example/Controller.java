@@ -141,8 +141,16 @@ public class Controller extends KrPreviewWindowController{
                 clear4Clicked();
             }
         }
-        else {
-            event.consume();
+        else if(event.isControlDown()){
+            if (event.getCode()==KeyCode.T){
+                previewClicked();
+            }
+        }
+        else if(event.isAltDown()){
+            if (event.getCode()==KeyCode.F4){
+                System.out.println("shortcut used to exit");
+                closeApplication();
+            }
         }
     }
 
