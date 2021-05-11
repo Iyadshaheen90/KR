@@ -29,7 +29,7 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Button id="clearPath" fx:id="clear" layoutX="486.0" layoutY="61.0" mnemonicParsing="false" onAction="#clearClicked" onKeyPressed="#enterClicked" stylesheets="@MyButtonsStyle.CSS" text="Clear">
+            <Button id="clearPath" fx:id="clear" layoutX="486.0" layoutY="61.0" mnemonicParsing="false" onAction="#clearClicked" onKeyReleased="#enterClicked" stylesheets="@MyButtonsStyle.CSS" text="Clear">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
@@ -39,11 +39,11 @@
                <font>
                   <Font size="11.0" />
                </font></TextField>
-             <Button fx:id="Write" layoutX="420.0" layoutY="132.0" mnemonicParsing="false" onAction="#writeClicked" onKeyPressed="#enterClicked" prefHeight="27.0" prefWidth="59.0" stylesheets="@MyButtonsStyle.CSS" text="Write">
+             <Button fx:id="Write" layoutX="420.0" layoutY="132.0" mnemonicParsing="false" onAction="#writeClicked" onKeyReleased="#enterClicked" prefHeight="27.0" prefWidth="59.0" stylesheets="@MyButtonsStyle.CSS" text="Write">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-             <Button id="clearPath" fx:id="clear2" layoutX="486.0" layoutY="132.0" mnemonicParsing="false" onAction="#clear2Clicked" onKeyPressed="#enterClicked" stylesheets="@MyButtonsStyle.CSS" text="Clear">
+             <Button id="clearPath" fx:id="clear2" layoutX="486.0" layoutY="132.0" mnemonicParsing="false" onAction="#clear2Clicked" onKeyReleased="#enterClicked" stylesheets="@MyButtonsStyle.CSS" text="Clear">
                  <cursor>
                      <Cursor fx:constant="HAND" />
                  </cursor></Button>
@@ -53,7 +53,7 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-             <Button id="clearPath" fx:id="clear3" layoutX="486.0" layoutY="265.0" mnemonicParsing="false" onAction="#clear3Clicked" onKeyPressed="#enterClicked" stylesheets="@MyButtonsStyle.CSS" text="Clear">
+             <Button id="clearPath" fx:id="clear3" layoutX="486.0" layoutY="265.0" mnemonicParsing="false" onAction="#clear3Clicked" onKeyReleased="#enterClicked" stylesheets="@MyButtonsStyle.CSS" text="Clear">
                  <cursor>
                      <Cursor fx:constant="HAND" />
                  </cursor></Button>
@@ -63,7 +63,7 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-             <Button id="clearPath" fx:id="clear4" layoutX="486.0" layoutY="356.0" mnemonicParsing="false" onAction="#clear4Clicked" onKeyPressed="#enterClicked" stylesheets="@MyButtonsStyle.CSS" text="Clear">
+             <Button id="clearPath" fx:id="clear4" layoutX="486.0" layoutY="356.0" mnemonicParsing="false" onAction="#clear4Clicked" onKeyReleased="#enterClicked" stylesheets="@MyButtonsStyle.CSS" text="Clear">
                  <cursor>
                      <Cursor fx:constant="HAND" />
                  </cursor></Button>

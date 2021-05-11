@@ -10,7 +10,7 @@ public class ExcelRow {
     private final String paid;
     private final String paymentMethod;
 
-    public ExcelRow(int rowNumber, String slotNumber, String name, String paid, String paymentMethod){
+    public ExcelRow(int rowNumber, String name,String slotNumber, String paid, String paymentMethod){
         this.rowNumber = rowNumber;
         this.slotNumber = slotNumber;
         this.name = name;

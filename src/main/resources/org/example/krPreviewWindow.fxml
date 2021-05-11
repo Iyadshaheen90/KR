@@ -11,11 +11,11 @@
          <children>
             <TableView fx:id="table" prefHeight="400.0" prefWidth="600.0">
               <columns>
-                  <TableColumn fx:id="colRow" editable="false" prefWidth="77.0" text="ROW#" style="-fx-alignment: CENTER;"/>
-                  <TableColumn fx:id="colSlot" editable="false" prefWidth="77.0" text="SLOT #" style="-fx-alignment: CENTER;"/>
-                  <TableColumn fx:id="colName" editable="false" prefWidth="177.0" text="NAME" style="-fx-alignment: CENTER;"/>
-                  <TableColumn fx:id="colPaid" editable="false" prefWidth="83.0" text="PAID" style="-fx-alignment: CENTER;"/>
-                  <TableColumn fx:id="colPaymentMethod" editable="false" prefWidth="185.0" text="PAYMENT METHOD" style="-fx-alignment: CENTER;"/>
+                  <TableColumn fx:id="colRow" editable="false" prefWidth="77.0" style="-fx-alignment: CENTER;" text="ROW#" />
+                  <TableColumn fx:id="colName" editable="false" prefWidth="177.0" style="-fx-alignment: CENTER;" text="NAME" />
+                  <TableColumn fx:id="colSlot" editable="false" prefWidth="77.0" style="-fx-alignment: CENTER;" text="SLOT #" />
+                  <TableColumn fx:id="colPaid" editable="false" prefWidth="83.0" style="-fx-alignment: CENTER;" text="PAID" />
+                  <TableColumn fx:id="colPaymentMethod" editable="false" prefWidth="185.0" style="-fx-alignment: CENTER;" text="PAYMENT METHOD" />
               </columns>
             </TableView>
          </children></AnchorPane>

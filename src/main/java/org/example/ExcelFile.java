@@ -69,6 +69,19 @@ public class ExcelFile{
         return ol;
     }
 
+    private int trackCustomerSlots(Sheet sheet, String name){
+        ArrayList<String> names = new ArrayList<>();
+        for (int i =0; i<=sheet.getLastRowNum(); i++)
+        {
+            if(sheet.getRow(i)!=null) {
+                names.add(sheet.getRow(i).getCell(1).getStringCellValue());
+            }
+        }
+        int occurrences = Collections.frequency(names,name);
+        System.out.println("this contains " + occurrences + " slots of this buyer");
+        return occurrences;
+    }
+
     public void initOl(String filePath, String sheet){
         ol.clear();
         try {
@@ -78,8 +91,8 @@ public class ExcelFile{
             for (int i = 0; i <= currentSheet.getLastRowNum(); i++){
                 if(currentSheet.getRow(i)!=null) {
                     ol.add(new ExcelRow(i+1,
-                            String.valueOf((int)currentSheet.getRow(i).getCell(0).getNumericCellValue()),
                             currentSheet.getRow(i).getCell(1).getStringCellValue(),
+                            String.valueOf((int)currentSheet.getRow(i).getCell(0).getNumericCellValue()),
                             currentSheet.getRow(i).getCell(2).getStringCellValue(),
                             currentSheet.getRow(i).getCell(3).getStringCellValue()));
                 }
@@ -91,9 +104,6 @@ public class ExcelFile{
                             ""));
                 }
             }
-
-            int occurrences = Collections.frequency(ol, ol.contains("Dex '1'"));
-            System.out.println("this contains " + occurrences + " slots of this buyer");
         } catch (IOException | EncryptedDocumentException ex) {
             ex.printStackTrace();
         }
@@ -161,12 +171,8 @@ public class ExcelFile{
                                 sheet.getRow(i).getCell(2).setCellValue("");
                             }
                             sheet.getRow(i).getCell(3).setCellStyle(style);
-                            if(paid) {
-                                sheet.getRow(i).getCell(3).setCellValue(paymentMethod);
-                            }
-                            if(!paid){
-                                sheet.getRow(i).getCell(3).setCellValue(paymentMethod);
-                            }
+                            sheet.getRow(i).getCell(3).setCellValue(paymentMethod);
+
                             publish((double) (100*ctr)/(updateToRow-updateFromRow + 1));
 
                         }
@@ -222,17 +228,34 @@ public class ExcelFile{
                 SwingWorker<Void, Double> worker = new SwingWorker<>() {
                     @Override
                     protected Void doInBackground() throws Exception {
-                        for (int i = deleteFromRow - 1; i < deleteToRow; i++) {
-                            sheet.removeRow(sheet.getRow(i));
-                            publish((double) (100 * i) / (deleteToRow - deleteFromRow + 1));
+                        //TODO instead of deleting the whole row, just clear the content in that row
+                        //if clearing the whole sheet might as well delete everything(rows)
+                        if(deleteToRow-1 == sheet.getLastRowNum() && deleteFromRow-1==0){
+                            for (int i = deleteFromRow - 1; i < deleteToRow; i++) {
+                                sheet.removeRow(sheet.getRow(i)); //this method deletes the rows instead of clearing the rows
+                                publish((double) (100 * i) / (deleteToRow - deleteFromRow + 1));
+                            }
+                        }
+                        //else if we are deleting just the last row, don't clear contents, just delete the row
+                        else if(deleteFromRow-1 == sheet.getLastRowNum() && deleteToRow-1 == sheet.getLastRowNum())
+                        {
+                            for (int i = deleteFromRow - 1; i < deleteToRow; i++) {
+                                sheet.removeRow(sheet.getRow(i)); //this method deletes the rows instead of clearing the rows
+                                publish((double) (100 * i) / (deleteToRow - deleteFromRow + 1));
+                            }
+                        }
+                        //any other case, e.g deleting entries in the middle or in the top,
+                        //then clear contents don't delete rows
+                        else {
+                            for (int i = deleteFromRow - 1; i < deleteToRow; i++) {
+                                sheet.getRow(i).getCell(1).setCellValue("");
+                                sheet.getRow(i).getCell(2).setCellValue("");
+                                sheet.getRow(i).getCell(3).setCellValue("");
+                                publish((double) (100 * i) / (deleteToRow - deleteFromRow + 1));
+                            }
                         }
 
-                        //shifting rows
-//                        sheet.shiftRows(deleteToRow,sheet.getLastRowNum(),-((deleteToRow-deleteFromRow)+1));
-                        //TODO fix the numbers after shifting is done
-                        //delete trailing empty rows
                         System.out.println(sheet.getLastRowNum()+"booya");
-                        //update slot numbers with a for loop
                         inputStream.close();
                         FileOutputStream outputStream = new FileOutputStream(file.getAbsolutePath());
                         workbook.write(outputStream);
@@ -308,19 +331,17 @@ public class ExcelFile{
                         rowCount = rowCount-1;
                     }
 
-                    int slotNumber;
+                    int slotNumber= trackCustomerSlots(sheet, name);
 
                     for (int i = 0; i < slots; i++) {
-                        slotNumber = i+1;
                         System.out.println(rowCount);
                         Row row = sheet.createRow(++rowCount);
-                        int columnCount = 0;
-                        Cell cell = row.createCell(columnCount);
+                        Cell cell = row.createCell(0);
                         cell.setCellStyle(style);
-                        cell.setCellValue(rowCount+1);
+                        cell.setCellValue(++slotNumber);
                         cell = row.createCell(1);
                         cell.setCellStyle(style);
-                        cell.setCellValue(name + " '" + slotNumber + "'");
+                        cell.setCellValue(name); //name + " '" + slotNumber + "'"
                         cell = row.createCell(2);
                         if(paid){
                             cell.setCellValue("Paid");

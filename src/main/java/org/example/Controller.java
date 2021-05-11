@@ -115,7 +115,7 @@ public class Controller extends KrPreviewWindowController{
             if(event.getSource()==Write){
                 writeClicked();
             }
-            else if(event.getSource()==delete){
+            else if(event.getSource()==delete && delete.isFocused()){
                 deleteClicked();
             }
             else if(event.getSource()==update){
@@ -141,17 +141,6 @@ public class Controller extends KrPreviewWindowController{
                 clear4Clicked();
             }
         }
-        else if(event.isControlDown()){
-            if (event.getCode()==KeyCode.T){
-                previewClicked();
-            }
-        }
-        else if(event.isAltDown()){
-            if (event.getCode()==KeyCode.F4){
-                System.out.println("shortcut used to exit");
-                closeApplication();
-            }
-        }
     }
 
     @FXML
@@ -170,7 +159,6 @@ public class Controller extends KrPreviewWindowController{
             clearItemsInMethodChoiceBox(writeMethodChoiceBox);
             writeMethodChoiceBox.setTooltip(new Tooltip("Select a payment method"));
             addItemsToWritePaymentMethodChoiceBox(paymentMethodsArray);
-
             clearItemsInChoiceBox();
             sheetChoiceBox.setVisible(true);
             sheetLabel.setVisible(true);
