@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.KrPreviewWindowController">
-  <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="580.0">
+
+<Pane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.KrPreviewWindowController">
+   <children>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0">
          <children>
             <TableView fx:id="table" prefHeight="400.0" prefWidth="600.0">
               <columns>
@@ -18,6 +19,7 @@
                   <TableColumn fx:id="colPaymentMethod" editable="false" prefWidth="185.0" style="-fx-alignment: CENTER;" text="PAYMENT METHOD" />
               </columns>
             </TableView>
-         </children></AnchorPane>
-  </content>
-</ScrollPane>
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>
