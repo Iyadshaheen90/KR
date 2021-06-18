@@ -14,10 +14,6 @@ import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.*;
 import javax.swing.*;
 
-/**
- * ToDO
- * using poi xssf to write to, and read from, an xlsx file excel.
- */
 public class ExcelFile{
     private File file;
     private int slots;
@@ -30,7 +26,7 @@ public class ExcelFile{
     private String sheetName;
     private boolean paid;
     private String paymentMethod;
-    private ObservableList<ExcelRow> ol = FXCollections.observableArrayList();
+    private final ObservableList<ExcelRow> ol = FXCollections.observableArrayList();
 
     //Constructor of class will be used as a empty constructor for side purposes
     public ExcelFile(){
@@ -125,6 +121,7 @@ public class ExcelFile{
         }
         return sheets;
     }
+
     public void updateRowsInFile() {
         try {
             System.out.println("i am in Update section");
@@ -219,31 +216,20 @@ public class ExcelFile{
             Workbook workbook = WorkbookFactory.create(inputStream);
             Sheet sheet = workbook.getSheetAt(workbook.getSheetIndex(sheetName));
             int lastRow = sheet.getLastRowNum();
-            //System.out.println("writing data to "+ sheetName + " sheet in the workbook");
-            //if its a new sheet with no rows then we want our row count at -1 so the first entry
-            //goes on the first row not the second due to ++rowcount
 //            sheet.removeRow(sheet.getRow(1));
             if (sheet.getRow(deleteFromRow-1)!=null && sheet.getRow(deleteToRow-1)!=null ) {
                 pBar.setVisible(true);
                 SwingWorker<Void, Double> worker = new SwingWorker<>() {
                     @Override
                     protected Void doInBackground() throws Exception {
-                        //TODO instead of deleting the whole row, just clear the content in that row
                         //if clearing the whole sheet might as well delete everything(rows)
-                        if(deleteToRow-1 == sheet.getLastRowNum() && deleteFromRow-1==0){
+                        if(deleteToRow-1 == lastRow && deleteFromRow-1<=lastRow){
                             for (int i = deleteFromRow - 1; i < deleteToRow; i++) {
                                 sheet.removeRow(sheet.getRow(i)); //this method deletes the rows instead of clearing the rows
                                 publish((double) (100 * i) / (deleteToRow - deleteFromRow + 1));
                             }
                         }
-                        //else if we are deleting just the last row, don't clear contents, just delete the row
-                        else if(deleteFromRow-1 == sheet.getLastRowNum() && deleteToRow-1 == sheet.getLastRowNum())
-                        {
-                            for (int i = deleteFromRow - 1; i < deleteToRow; i++) {
-                                sheet.removeRow(sheet.getRow(i)); //this method deletes the rows instead of clearing the rows
-                                publish((double) (100 * i) / (deleteToRow - deleteFromRow + 1));
-                            }
-                        }
+
                         //any other case, e.g deleting entries in the middle or in the top,
                         //then clear contents don't delete rows
                         else {
@@ -312,7 +298,9 @@ public class ExcelFile{
                         style.setFillForegroundColor(IndexedColors.RED.getIndex());
                         style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
                     }
-                    else if(paid){
+
+                    //else if Paid
+                    else {
                         style.setBorderBottom(BorderStyle.THIN);
                         style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
                         style.setBorderRight(BorderStyle.THIN);
@@ -325,7 +313,7 @@ public class ExcelFile{
                     System.out.println("writing data to "+ sheetName + " sheet in the workbook");
                     int rowCount = sheet.getLastRowNum();
                     //if its a new sheet with no rows(last row is 0 and is empty) then we want our row count at -1 so the first entry
-                    //goes on the first row not the second due to ++rowcount
+                    //goes on the first row not the second due to ++row-count
                     if(rowCount == 0 && sheet.getRow(rowCount)==null)
                     {
                         rowCount = rowCount-1;
